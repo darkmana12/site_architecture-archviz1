@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Harmonie3D — O</title>
+<title>Stéphane AUER — O</title>
 <link href="https://fonts.googleapis.com/css2?family=Gloock:ital@0;1&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 /* ══ VERSION O — OVERLAP BRUTALISTE ══
@@ -19,11 +19,13 @@ body::before{content:'';position:fixed;inset:0;z-index:1000;pointer-events:none;
 
 #loader{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3rem;transition:opacity .9s cubic-bezier(.76,0,.24,1),visibility .9s}
 #loader.gone{opacity:0;visibility:hidden}
-.ld-title{font-family:'Gloock',serif;font-style:italic;font-size:clamp(2.5rem,7vw,6rem);color:var(--c);display:flex;gap:.03em;overflow:hidden}
+.ld-title{font-family:'Gloock',serif;font-style:italic;font-size:clamp(2.2rem,6vw,5.2rem);color:var(--c);display:flex;gap:.03em;overflow:hidden}
 .lc{display:inline-block;transform:translateY(110%);transition:transform .7s cubic-bezier(.76,0,.24,1)}
 .ld-bar-wrap{width:min(320px,60vw);height:1px;background:var(--ln);position:relative;overflow:hidden}
 .ld-bar{position:absolute;top:0;left:0;height:100%;width:0;background:var(--a)}
 .ld-num{font-size:.68rem;letter-spacing:.2em;color:var(--dim)}
+.ld-subtitle{font-family:'Gloock',serif;font-style:italic;font-size:clamp(2.2rem,6vw,5.2rem);letter-spacing:.02em;color:var(--c);margin-top:1rem;opacity:0;transform:translateY(110%);animation:ldSubIn .7s .1s cubic-bezier(.76,0,.24,1) forwards}
+@keyframes ldSubIn{to{opacity:1;transform:translateY(0)}}
 
 #cur{position:fixed;top:0;left:0;z-index:8000;pointer-events:none}
 #cur-dot{width:8px;height:8px;background:var(--c);border-radius:50%;position:absolute;transform:translate(-50%,-50%)}
@@ -34,7 +36,7 @@ body.ch #cur-label{opacity:1}
 
 /* NAV minimaliste */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:1.8rem 4rem}
-.nav-logo img{height:24px;filter:brightness(0) invert(1);opacity:.85}
+.nav-logo{font-family:'Gloock',serif;font-style:italic;font-size:1.1rem;letter-spacing:.02em;color:var(--c);text-decoration:none;opacity:.9}
 .nav-links{display:flex;gap:0;list-style:none}
 .nav-links a{font-size:.63rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c);text-decoration:none;padding:.5rem 1.4rem;opacity:.4;transition:opacity .3s}
 .nav-links a:hover{opacity:1}
@@ -143,21 +145,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 .ar-name{font-family:'Gloock',serif;font-style:italic;font-size:1.1rem}
 
 footer{background:var(--bg);border-top:1px solid var(--ln);padding:2.8rem 4rem;display:flex;align-items:center;justify-content:space-between}
-.foot-logo img{height:22px;filter:brightness(0) invert(1);opacity:.4}
+.foot-logo{font-family:'Gloock',serif;font-style:italic;font-size:1rem;letter-spacing:.02em;color:var(--dim);text-decoration:none}
 .foot-links{display:flex;gap:2rem;list-style:none}
 .foot-links a{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .3s}
 .foot-links a:hover{color:var(--a)}
 .foot-copy{font-size:.6rem;color:rgba(234,226,204,.18)}
-.badge{position:fixed;bottom:2rem;left:2rem;background:var(--a);color:var(--bg);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;padding:.45rem .9rem;z-index:300;font-weight:500}
 @media(max-width:900px){nav{padding:1.5rem 2rem}.hero-title{font-size:18vw}.hero-title-block,.hero-meta{padding-left:2rem;padding-right:2rem}.op-inner,.op-item:nth-child(odd) .op-inner,.op-item:nth-child(even) .op-inner{grid-template-columns:1fr;padding:0 2rem}.op-item:nth-child(odd) .op-info,.op-item:nth-child(even) .op-info{padding:2rem 0 0}.op-num{display:none}.contact-block{grid-template-columns:1fr;gap:3rem;padding:5rem 2rem}.autres,.scramble-wrap{padding:5rem 2rem}.autres-row{grid-template-columns:1fr}footer{flex-direction:column;gap:2rem;text-align:center}body{cursor:auto}#cur{display:none}}
 </style>
 </head>
 <body>
-<div id="loader"><div class="ld-title"><span class="lc">H</span><span class="lc">a</span><span class="lc">r</span><span class="lc">m</span><span class="lc">o</span><span class="lc">n</span><span class="lc">i</span><span class="lc">e</span><span class="lc" style="margin-left:.18em">3</span><span class="lc">D</span></div><div class="ld-bar-wrap"><div class="ld-bar" id="ldBar"></div></div><div class="ld-num" id="ldNum">0%</div></div>
+<div id="loader"><div class="ld-title"><span class="lc">S</span><span class="lc">t</span><span class="lc">é</span><span class="lc">p</span><span class="lc">h</span><span class="lc">a</span><span class="lc">n</span><span class="lc">e</span><span class="lc" style="margin-left:.18em"> </span><span class="lc">A</span><span class="lc">U</span><span class="lc">E</span><span class="lc">R</span></div><p class="ld-subtitle">Architecture · Design · Archviz</p><div class="ld-bar-wrap"><div class="ld-bar" id="ldBar"></div></div><div class="ld-num" id="ldNum">0%</div></div>
 <div id="cur"><div id="cur-dot"></div><div id="cur-ring"></div><div id="cur-label">Voir</div></div>
-<div class="badge">O — Overlap</div>
 <nav>
-  <a class="nav-logo" href="#"><img src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=480,height=107/image/456641883/fecaf528-ce11-45e6-a692-213a4858032d.png" alt="Harmonie3D"></a>
+  <a class="nav-logo" href="#">Stéphane AUER</a>
   <ul class="nav-links"><li><a href="#">Portfolio</a></li><li><a href="#">Services</a></li><li><a href="#">Contact</a></li></ul>
 </nav>
 <div class="hero">
@@ -169,7 +169,7 @@ footer{background:var(--bg);border-top:1px solid var(--ln);padding:2.8rem 4rem;d
     <div class="hero-eyebrow"><span>Visualisation architecturale · Archviz · Immobilier</span></div>
     <h1 class="hero-title"><span class="hl"><span class="hw">Architecture</span></span><span class="hl"><span class="hw">d'intérieur &</span></span><span class="hl"><span class="hw">Photoréalisme</span></span></h1>
   </div>
-  <div class="hero-meta"><span><i>06 projets sélectionnés</i></span><span><i>France · 2025</i></span></div>
+  <div class="hero-meta"><span><i>06 projets sélectionnés</i></span><span><i>France · 2026</i></span></div>
 </div>
 <div class="marquee"><div class="mq-track"><span class="mq-item">Architecture d'intérieur<span class="mq-sep">◆</span></span><span class="mq-item">Projections<span class="mq-sep">◆</span></span><span class="mq-item">Photoréaliste<span class="mq-sep">◆</span></span><span class="mq-item">Architecture d'extérieur<span class="mq-sep">◆</span></span><span class="mq-item">Perspectives<span class="mq-sep">◆</span></span><span class="mq-item">Design Commercial<span class="mq-sep">◆</span></span><span class="mq-item">Intégrations réalistes<span class="mq-sep">◆</span></span><span class="mq-item">Architecture d'intérieur<span class="mq-sep">◆</span></span><span class="mq-item">Projections<span class="mq-sep">◆</span></span><span class="mq-item">Photoréaliste<span class="mq-sep">◆</span></span><span class="mq-item">Architecture d'extérieur<span class="mq-sep">◆</span></span><span class="mq-item">Perspectives<span class="mq-sep">◆</span></span><span class="mq-item">Design Commercial<span class="mq-sep">◆</span></span><span class="mq-item">Intégrations réalistes<span class="mq-sep">◆</span></span></div></div>
 <div class="overlap-projects">
@@ -178,19 +178,19 @@ footer{background:var(--bg);border-top:1px solid var(--ln);padding:2.8rem 4rem;d
   <div class="op-item" data-op><span class="op-num">03</span><div class="op-inner"><div class="op-img"><div class="op-img-inner"><img src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=195;700;195;700,width=1129,height=1280/image/470167255/79341ab8-3f7d-4e8e-9bb4-55c426c5ea3d.png" alt=""></div></div><div class="op-info"><p class="op-cat">Immobilier</p><h2 class="op-title">Architecture d'extérieur</h2><div class="op-rule"></div><p class="op-desc">Façades et volumes extérieurs avec une précision absolue.</p></div></div></div>
   <div class="op-item" data-op><span class="op-num">04</span><div class="op-inner"><div class="op-img"><div class="op-img-inner"><img src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,width=1280,height=853/image/456652874/18018e86-49d2-4118-b561-de24fe17aa53.png" alt=""></div></div><div class="op-info"><p class="op-cat">Immobilier</p><h2 class="op-title">Perspectives captivantes</h2><div class="op-rule"></div><p class="op-desc">Angles soigneusement choisis pour valoriser chaque espace et convaincre vos clients.</p></div></div></div>
 </div>
-<div class="scramble-wrap" id="scrambleWrap"><p class="sw-label">Notre approche</p><p class="sw-text" id="swText">Chaque rendu est une alliance entre précision technique et sensibilité artistique — pour des visualisations qui racontent l'espace avant même qu'il existe.</p><div class="sw-bottom"><span class="sw-tag">Harmonie3D · France · 2025</span><span class="sw-tag">Archviz · Architecture · Design</span></div></div>
+<div class="scramble-wrap" id="scrambleWrap"><p class="sw-label">Notre approche</p><p class="sw-text" id="swText">Chaque rendu est une alliance entre précision technique et sensibilité artistique — pour des visualisations qui racontent l'espace avant même qu'il existe.</p><div class="sw-bottom"><span class="sw-tag">Stéphane AUER · France · 2026</span><span class="sw-tag">Archviz · Architecture · Design</span></div></div>
 <div class="autres"><h3>Autres projets</h3><div class="autres-row"><div class="ar-cell"><img src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;462;0;462,width=1129,height=1280/image/456658644/3e43e5f3-cc55-4289-8972-80c0c4b1cbda.png" alt=""><div class="ar-info"><p class="ar-cat">Prévisions</p><h3 class="ar-name">Intégrations réalistes</h3></div></div><div class="ar-cell"><img src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;78;0;155,width=800,height=512/image/533924987/c2c2c7ac-5f69-45fd-92d0-392296b51c4c.png" alt=""><div class="ar-info"><p class="ar-cat">Résidentiel</p><h3 class="ar-name">Architecture résidentielle</h3></div></div><div class="ar-cell"><img src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;578;0;578,width=800,height=800/image/533925031/e7bc26ba-3788-419f-a21d-3bb9a796d640.png" alt=""><div class="ar-info"><p class="ar-cat">Intérieur</p><h3 class="ar-name">Aménagement intérieur</h3></div></div></div></div>
 <div class="contact-block" id="ctaBlock">
   <div class="cb-left"><p class="cb-label">Démarrons un projet</p><h2 class="cb-title"><span>Parlons de votre vision.</span></h2></div>
-  <div class="cb-right"><div class="cb-info"><p class="cb-info-label">Email</p><p class="cb-info-val">contact@harmonie3d.fr</p></div><a href="mailto:contact@harmonie3d.fr" class="cb-cta">Envoyer un message <span>→</span></a></div>
+  <div class="cb-right"><div class="cb-info"><p class="cb-info-label">Email</p><p class="cb-info-val">contact@stephaneauer.fr</p></div><a href="mailto:contact@stephaneauer.fr" class="cb-cta">Envoyer un message <span>→</span></a></div>
 </div>
-<footer><div class="foot-logo"><img src="https://storage.e.jimdo.com/cdn-cgi/image/quality=85,fit=scale-down,format=auto,trim=0;0;0;0,width=480,height=107/image/456641883/fecaf528-ce11-45e6-a692-213a4858032d.png" alt="Harmonie3D"></div><ul class="foot-links"><li><a href="#">Mentions légales</a></li><li><a href="#">Confidentialité</a></li><li><a href="#">Contact</a></li></ul><p class="foot-copy">© 2025 Harmonie3D</p></footer>
+<footer><a class="foot-logo" href="#">Stéphane AUER</a><ul class="foot-links"><li><a href="#">Mentions légales</a></li><li><a href="#">Confidentialité</a></li><li><a href="#">Contact</a></li></ul><p class="foot-copy">© 2026 Stéphane AUER</p></footer>
 <script>
 (function(){const b=document.getElementById('ldBar'),n=document.getElementById('ldNum'),ls=document.querySelectorAll('.lc');setTimeout(()=>ls.forEach((l,i)=>setTimeout(()=>{l.style.transform='translateY(0)'},i*70)),100);let p=0;const t=setInterval(()=>{p+=Math.random()*4+1.5;if(p>=100){p=100;clearInterval(t);}b.style.width=p+'%';n.textContent=Math.floor(p)+'%';if(p>=100)setTimeout(()=>document.getElementById('loader').classList.add('gone'),400);},40);})();
 const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring'),lbl=document.getElementById('cur-label');let mx=0,my=0,rx=0,ry=0,lx=0,ly=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});(function lc(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';lx+=(mx-lx)*.1;ly+=(my-ly)*.1;lbl.style.left=lx+'px';lbl.style.top=ly+'px';requestAnimationFrame(lc);})();document.querySelectorAll('a,.op-item,.ar-cell').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.classList.add('ch');document.body.classList.add('ch');});el.addEventListener('mouseleave',()=>{ring.classList.remove('ch');document.body.classList.remove('ch');});});
 const opObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;const item=e.target,ic=item.querySelector('.op-img'),inner=item.querySelector('.op-img-inner');ic.classList.add('revealing');setTimeout(()=>inner.classList.add('open'),80);item.classList.add('inview');opObs.unobserve(item);});},{threshold:.2});document.querySelectorAll('[data-op]').forEach(el=>opObs.observe(el));
 new IntersectionObserver(en=>{if(en[0].isIntersecting)en[0].target.classList.add('inview');},{threshold:.3}).observe(document.getElementById('ctaBlock'));
-const CH='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',TG="Chaque rendu est une alliance entre précision technique et sensibilité artistique — pour des visualisations qui racontent l'espace avant même qu'il existe.",sw=document.getElementById('swText');let sd=false;new IntersectionObserver(en=>{if(!en[0].isIntersecting||sd)return;sd=true;let f=0;const arr=TG.split('');(function tk(){sw.textContent=arr.map((c,i)=>{if(c===' '||c==='—'||c==="'"||c===',')return c;if(i/arr.length<f/55)return c;return CH[Math.floor(Math.random()*CH.length)];}).join('');f++;if(f<=55)requestAnimationFrame(tk);else sw.textContent=TG;})();},{threshold:.4}).observe(document.getElementById('scrambleWrap'));
+const CH='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',TG="Chaque rendu est une alliance entre précision technique et sensibilité artistique — pour des visualisations qui racontent l'espace avant même qu'il existe.",sw=document.getElementById('swText');let sd=false;new IntersectionObserver(en=>{if(!en[0].isIntersecting||sd)return;sd=true;let f=0;const arr=TG.split('');(function tk(){sw.textContent=arr.map((c,i)=>{if(c===' '||c==='—'||c==="'"||c===',')return c;if(i/arr.length<f/440)return c;return CH[Math.floor(Math.random()*CH.length)];}).join('');f++;if(f<=440)requestAnimationFrame(tk);else sw.textContent=TG;})();},{threshold:.4}).observe(document.getElementById('scrambleWrap'));
 </script>
 </body>
 </html>
