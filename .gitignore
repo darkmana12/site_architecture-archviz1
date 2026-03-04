@@ -1,0 +1,15 @@
+# Références / exemples (non déployés, non modifiés pour le site en ligne)
+assets/
+
+# Fichiers temporaires
+temp_*.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+.vscode/
+*.code-workspace
