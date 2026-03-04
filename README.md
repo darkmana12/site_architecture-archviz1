@@ -43,14 +43,11 @@ StephaneAuer_Archi_site/
 2. Build settings : **Pas de build** (site statique)
 3. Répertoire de sortie : `/` (racine du repo)
 
-## Lancer le site en local
+## Lancer le site en local (temps réel)
 
 ```bash
-# Avec Python
-python -m http.server 8000
-
-# Avec Node.js (npx)
-npx serve .
+npm install
+npm run dev
 ```
 
-Puis accédez à http://localhost:8000
+Ouvre http://localhost:8080 — Vite détecte les modifications et recharge la page quasi instantanément. Tu vois les changements dès qu’un fichier est modifié.

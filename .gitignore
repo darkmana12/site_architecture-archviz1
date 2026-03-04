@@ -14,3 +14,11 @@ Thumbs.db
 *.swo
 .vscode/
 *.code-workspace
+
+# Node
+node_modules/
+package-lock.json
+
+# Vite
+.vite/
+dist/

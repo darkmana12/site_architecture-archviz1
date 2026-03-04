@@ -1,0 +1,12 @@
+{
+  "name": "site-stephane-auer",
+  "version": "1.0.0",
+  "description": "Site Stéphane AUER - Architecture & Photoréalisme",
+  "scripts": {
+    "dev": "vite --port 8080",
+    "preview": "vite preview --port 8080"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
