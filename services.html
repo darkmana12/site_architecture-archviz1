@@ -6,7 +6,33 @@
 <title>Services — Harmonie3D</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Gloock:ital@0;1&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<style>
+:root{--bg:#17130F;--bg2:#1F1914;--cream:#EDE5D8;--dim:rgba(237,229,216,.42);--line:rgba(237,229,216,.09);--terra:#C86B4A}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:auto}
+body{background:var(--bg);color:var(--cream);font-family:'Outfit',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+body::before{content:'';position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px}
+#cur{position:fixed;top:0;left:0;z-index:8000;pointer-events:none}
+#cur-dot{width:8px;height:8px;background:var(--cream);border-radius:50%;position:absolute;transform:translate(-50%,-50%)}
+#cur-ring{width:40px;height:40px;border:1px solid rgba(237,229,216,.35);border-radius:50%;position:absolute;transform:translate(-50%,-50%);transition:width .45s,height .45s,border-color .35s}
+body.ch #cur-ring,#cur-ring.ch{width:70px;height:70px;border-color:rgba(200,107,74,.6)}
+#cur-label{position:absolute;transform:translate(-50%,-50%);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--terra);opacity:0;white-space:nowrap;font-weight:500;transition:opacity .3s}
+body.ch #cur-label{opacity:1}
+header.site-banner{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 4rem;height:56px;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 2px 20px rgba(0,0,0,.3)}
+header.site-banner .banner-brand{font-family:'Gloock',serif;font-size:23px;font-weight:700;font-style:italic;color:var(--cream);text-decoration:none;letter-spacing:.06em}
+header.site-banner .banner-nav{display:flex;gap:.5rem;list-style:none;margin:0;padding:0}
+header.site-banner .banner-nav a{display:inline-block;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--cream);text-decoration:none;padding:.6rem 1.5rem;font-weight:500;background:transparent;border:1px solid rgba(237,229,216,.25);border-radius:4px;transition:background .25s,border-color .25s,color .25s}
+header.site-banner .banner-nav a:hover{background:rgba(237,229,216,.12);border-color:rgba(237,229,216,.5);color:var(--cream)}
+.page-content{padding:7rem 4rem 4rem;min-height:80vh}
+.page-content h1{font-family:'Gloock',serif;font-style:italic;font-size:clamp(2.5rem,5vw,4rem);margin-bottom:2rem}
+.page-content p{font-size:.9rem;color:var(--dim);line-height:1.9;max-width:560px}
+footer{background:var(--bg);border-top:1px solid var(--line);padding:2.8rem 4rem;display:flex;align-items:center;justify-content:space-between}
+.foot-logo img{height:22px;filter:brightness(0) invert(1);opacity:.45}
+.foot-links{display:flex;gap:2rem;list-style:none}
+.foot-links a{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);text-decoration:none;transition:color .3s}
+.foot-links a:hover{color:var(--terra)}
+.foot-copy{font-size:.6rem;color:rgba(237,229,216,.2)}
+@media(max-width:900px){header.site-banner{padding:0 2rem;height:56px}.banner-nav a{padding:.5rem 1rem;font-size:.62rem}body{cursor:auto}#cur{display:none}footer{flex-direction:column;gap:2rem;text-align:center}}
+</style>
 </head>
 <body>
 

@@ -30,7 +30,7 @@ if(dot && ring){
     if(lbl){ lx += (mx-lx)*0.1; ly += (my-ly)*0.1; lbl.style.left=lx+'px'; lbl.style.top=ly+'px'; }
     requestAnimationFrame(loopCur);
   })();
-  document.querySelectorAll('a,button,.proj-row,.hl-item,.ss-item,.dark-full').forEach(el=>{
+  document.querySelectorAll('a, button').forEach(el=>{
     el.addEventListener('mouseenter',()=>{ ring.classList.add('ch'); document.body.classList.add('ch'); });
     el.addEventListener('mouseleave',()=>{ ring.classList.remove('ch'); document.body.classList.remove('ch'); });
   });
