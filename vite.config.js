@@ -25,9 +25,9 @@ function devStripGithubPagesPrefix() {
   }
 }
 
-export default defineConfig({
-  // Chemins relatifs : OK en local, sur GitHub Pages (sous-dossier) et domaine racine — pas de nom de repo en dur
-  base: './',
+export default defineConfig(({ mode }) => ({
+  // Dev : chemins relatifs. Prod : préfixe du dépôt GitHub Pages (évite scripts/json 404 si l’URL de la page varie).
+  base: mode === 'development' ? './' : `${GH_PAGES_PREFIX}/`,
   plugins: [devStripGithubPagesPrefix()],
   server: {
     port: 8080,
@@ -41,4 +41,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))

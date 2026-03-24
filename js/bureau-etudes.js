@@ -102,7 +102,7 @@ function createViewer(container) {
     return
   }
 
-  const src = v ? `models/${file}?v=${v}` : `models/${file}`
+  const src = publicAssetUrl(v ? `models/${file}?v=${v}` : `models/${file}`)
   const width = container.clientWidth || 800
   const height = container.clientHeight || 450
 
@@ -194,13 +194,19 @@ function bindViewportObservers(scope) {
 
 // ─── Bootstrap ───────────────────────────────────────────────────────────────
 
+/** Fichiers dans public/ (racine du site). BASE_URL = `./` en dev, `/repo/` en prod GitHub Pages. */
+function publicAssetUrl(path) {
+  const p = path.replace(/^\//, '')
+  return `${import.meta.env.BASE_URL}${p}`
+}
+
 async function init() {
   const container = document.getElementById('portfolio-be')
   if (!container) return
 
   let manifest
   try {
-    const res = await fetch('models-manifest.json')
+    const res = await fetch(publicAssetUrl('models-manifest.json'))
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     manifest = await res.json()
   } catch {
@@ -212,7 +218,7 @@ async function init() {
   // Métadonnées optionnelles : titre, lieu, description par nom de fichier
   let info = {}
   try {
-    const res = await fetch('models-info.json')
+    const res = await fetch(publicAssetUrl('models-info.json'))
     if (res.ok) info = await res.json()
   } catch {}
 
