@@ -4,6 +4,23 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 /** Les visionneuses sont définies dans bureau-etudes.html (data-src sur chaque .be-viewport). */
 
+/** Résout les .glb selon le base Vite et l’URL de la page (évite /models/… à la racine du domaine en prod). */
+function resolveModelUrl(path) {
+  const p = path.trim()
+  if (!p || /^https?:\/\//i.test(p)) return p
+  try {
+    const baseHref = new URL(import.meta.env.BASE_URL, window.location.href).href
+    const file = p.startsWith('/') ? p.slice(1) : p
+    return new URL(file, baseHref).href
+  } catch {
+    try {
+      return new URL(p, window.location.href).href
+    } catch {
+      return p
+    }
+  }
+}
+
 function fitCameraToContent(camera, controls, object, margin = 1.35) {
   const box = new THREE.Box3().setFromObject(object)
   const size = box.getSize(new THREE.Vector3())
@@ -76,8 +93,9 @@ function createViewer(container) {
   ro.observe(container)
 
   const loader = new GLTFLoader()
+  const url = resolveModelUrl(src)
   loader.load(
-    src,
+    url,
     (gltf) => {
       scene.add(gltf.scene)
       fitCameraToContent(camera, controls, gltf.scene)
