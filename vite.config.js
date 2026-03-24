@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-/** Même préfixe que sur GitHub Pages (user.github.io/NOM_DU_REPO/). En dev, si tu ouvres cette URL, Vite servait index.html à la place des autres pages — on enlève le préfixe pour que bureau-etudes.html soit la bonne page. */
+/** En dev, redirige /site_architecture-archviz1/... vers / pour que les liens GitHub Pages marchent aussi en local. */
 const GH_PAGES_PREFIX = '/site_architecture-archviz1'
 
 function devStripGithubPagesPrefix() {
@@ -25,9 +25,9 @@ function devStripGithubPagesPrefix() {
   }
 }
 
-export default defineConfig(({ mode }) => ({
-  // Dev : chemins relatifs. Prod : préfixe du dépôt GitHub Pages (évite scripts/json 404 si l’URL de la page varie).
-  base: mode === 'development' ? './' : `${GH_PAGES_PREFIX}/`,
+export default defineConfig({
+  // Chemins relatifs : fonctionne sur GitHub Pages (sous-dossier), Cloudflare Pages (racine) et en local.
+  base: './',
   plugins: [devStripGithubPagesPrefix()],
   server: {
     port: 8080,
@@ -41,4 +41,4 @@ export default defineConfig(({ mode }) => ({
       },
     },
   },
-}))
+})
