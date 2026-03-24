@@ -58,23 +58,38 @@ function setupItemObservers(container) {
     el.addEventListener('mouseleave', () => el.classList.remove('frame-hover'))
   })
 
-  const opObs = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((e) => {
-        if (!e.isIntersecting) return
-        const item = e.target
-        const ic = item.querySelector('.op-img')
-        const inner = item.querySelector('.op-img-inner')
-        if (ic) ic.classList.add('revealing')
-        if (inner) setTimeout(() => inner.classList.add('open'), 80)
-        item.classList.add('inview')
-        opObs.unobserve(item)
-      })
-    },
-    { threshold: 0.2 }
-  )
+  const items = container.querySelectorAll('[data-op]')
 
-  container.querySelectorAll('[data-op]').forEach((el) => opObs.observe(el))
+  // Reveal immédiat pour les items déjà visibles au chargement
+  items.forEach((item) => {
+    const ic = item.querySelector('.op-img')
+    const inner = item.querySelector('.op-img-inner')
+    if (ic) ic.classList.add('revealing')
+    if (inner) setTimeout(() => inner.classList.add('open'), 80)
+    item.classList.add('inview')
+  })
+
+  // Observer pour les items hors viewport (scroll vers le bas)
+  if (typeof IntersectionObserver !== 'undefined') {
+    const opObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return
+          const item = e.target
+          const ic = item.querySelector('.op-img')
+          const inner = item.querySelector('.op-img-inner')
+          if (ic) ic.classList.add('revealing')
+          if (inner) setTimeout(() => inner.classList.add('open'), 80)
+          item.classList.add('inview')
+          opObs.unobserve(item)
+        })
+      },
+      { threshold: 0.05 }
+    )
+    items.forEach((el) => {
+      if (!el.classList.contains('inview')) opObs.observe(el)
+    })
+  }
 }
 
 // ─── Viewer 3D ───────────────────────────────────────────────────────────────
