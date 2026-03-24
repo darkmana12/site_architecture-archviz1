@@ -1,0 +1,12 @@
+{
+  "blender_convert_leCarthageNice.glb": {
+    "title": "Le Carthage Nice",
+    "location": "Nice",
+    "description": "Modélisation simple mais fidèle du bâtiment à des fins de ravalement de façades\u00a0: surfaces par matériau pour le chiffrage et étude des coûts."
+  },
+  "blender_convert_ARLEQUIN_CAGNES.glb": {
+    "title": "Arlequin Cagnes-sur-Mer",
+    "location": "Cagnes-sur-Mer",
+    "description": "Modélisation simple mais fidèle du bâtiment à des fins de ravalement de façades\u00a0: surfaces par matériau pour le chiffrage et étude des coûts."
+  }
+}

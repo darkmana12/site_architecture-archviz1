@@ -2,24 +2,80 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
-/** Les visionneuses sont définies dans bureau-etudes.html (data-src sur chaque .be-viewport). */
+// ─── Génération des blocs depuis le manifeste ────────────────────────────────
 
-/** Résout les .glb selon le base Vite et l’URL de la page (évite /models/… à la racine du domaine en prod). */
-function resolveModelUrl(path) {
-  const p = path.trim()
-  if (!p || /^https?:\/\//i.test(p)) return p
-  try {
-    const baseHref = new URL(import.meta.env.BASE_URL, window.location.href).href
-    const file = p.startsWith('/') ? p.slice(1) : p
-    return new URL(file, baseHref).href
-  } catch {
-    try {
-      return new URL(p, window.location.href).href
-    } catch {
-      return p
-    }
-  }
+const DESC_VIEWER =
+  '<span class="op-desc-visu">Visionneuse\u00a03D</span>\u00a0:<br>Rotate\u00a0: Clic gauche<br>Zoom\u00a0: Molette<br>D\u00e9placer\u00a0: Clic droit'
+
+function cleanTitle(filename) {
+  return filename
+    .replace(/\.glb$/i, '')
+    .replace(/^(blender_convert_|blender_|convert_)/i, '')
+    .replace(/[_-]+/g, ' ')
+    .trim()
 }
+
+function buildBlock(entry, index) {
+  const { file, v, title, location, description } = entry
+  const num = String(index + 1).padStart(2, '0')
+  const displayTitle = title || cleanTitle(file)
+  const displayLoc = location || ''
+  const displayDesc = description ? `${description}<br><br>${DESC_VIEWER}` : DESC_VIEWER
+  const ariaLabel = `${displayTitle}${displayLoc ? ` \u2014 ${displayLoc}` : ''} \u2014 mod\u00e8le 3D`
+
+  const item = document.createElement('div')
+  item.className = 'op-item'
+  item.dataset.op = ''
+  item.innerHTML = `
+    <span class="op-num">${num}</span>
+    <div class="op-inner">
+      <div class="op-img">
+        <div class="op-img-inner">
+          <div class="be-viewport be-loading"
+               data-model-file="${file}"
+               ${v ? `data-model-v="${v}"` : ''}
+               role="img"
+               aria-label="${ariaLabel}"></div>
+        </div>
+      </div>
+      <div class="op-info">
+        ${displayLoc ? `<p class="op-cat">${displayLoc}</p>` : ''}
+        <h2 class="op-title">${displayTitle}</h2>
+        <div class="op-rule"></div>
+        <p class="op-desc">${displayDesc}</p>
+      </div>
+    </div>`
+  return item
+}
+
+// ─── Animations (observer d'entrée + hover) ──────────────────────────────────
+
+function setupItemObservers(container) {
+  container.querySelectorAll('.op-item').forEach((el) => {
+    el.addEventListener('mouseenter', () => el.classList.add('frame-hover'))
+    el.addEventListener('mouseleave', () => el.classList.remove('frame-hover'))
+  })
+
+  const opObs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return
+        const item = e.target
+        const ic = item.querySelector('.op-img')
+        const inner = item.querySelector('.op-img-inner')
+        if (ic) ic.classList.add('revealing')
+        if (inner) setTimeout(() => inner.classList.add('open'), 80)
+        item.classList.add('inview')
+        opObs.unobserve(item)
+      })
+    },
+    { threshold: 0.2 }
+  )
+
+  container.querySelectorAll('[data-op]').forEach((el) => opObs.observe(el))
+}
+
+// ─── Viewer 3D ───────────────────────────────────────────────────────────────
 
 function fitCameraToContent(camera, controls, object, margin = 1.35) {
   const box = new THREE.Box3().setFromObject(object)
@@ -37,15 +93,16 @@ function fitCameraToContent(camera, controls, object, margin = 1.35) {
 }
 
 function createViewer(container) {
-  const src = (container.dataset.src || '').trim()
-  if (!src) {
+  const file = (container.dataset.modelFile || '').trim()
+  const v = (container.dataset.modelV || '').trim()
+  if (!file) {
     container.classList.remove('be-loading')
     container.classList.add('be-error')
-    container.textContent =
-      'Ajoutez votre fichier .glb dans public/models/ et renseignez data-src sur ce bloc.'
+    container.textContent = 'Fichier .glb non spécifié.'
     return
   }
 
+  const src = v ? `models/${file}?v=${v}` : `models/${file}`
   const width = container.clientWidth || 800
   const height = container.clientHeight || 450
 
@@ -65,11 +122,11 @@ function createViewer(container) {
   controls.dampingFactor = 0.06
 
   const amb = new THREE.AmbientLight(0xffffff, 0.55)
-  const key = new THREE.DirectionalLight(0xfff4e8, 1.15)
-  key.position.set(8, 14, 10)
+  const keyLight = new THREE.DirectionalLight(0xfff4e8, 1.15)
+  keyLight.position.set(8, 14, 10)
   const fill = new THREE.DirectionalLight(0xc8d4ff, 0.35)
   fill.position.set(-6, 4, -8)
-  scene.add(amb, key, fill)
+  scene.add(amb, keyLight, fill)
 
   container.innerHTML = ''
   container.appendChild(renderer.domElement)
@@ -93,9 +150,8 @@ function createViewer(container) {
   ro.observe(container)
 
   const loader = new GLTFLoader()
-  const url = resolveModelUrl(src)
   loader.load(
-    url,
+    src,
     (gltf) => {
       scene.add(gltf.scene)
       fitCameraToContent(camera, controls, gltf.scene)
@@ -112,24 +168,16 @@ function createViewer(container) {
       container.classList.add('be-error')
       container.innerHTML = ''
       container.textContent =
-        'Impossible de charger le modèle. Vérifiez le chemin du fichier .glb.'
+        'Impossible de charger le modèle. Vérifiez le fichier .glb dans public/models/.'
     }
   )
 }
 
 function bindViewportObservers(scope) {
   const root = scope || document
-  root.querySelectorAll('.be-viewport[data-src]').forEach((el) => {
+  root.querySelectorAll('.be-viewport[data-model-file]').forEach((el) => {
     if (el.dataset.beViewerBound === '1') return
     el.dataset.beViewerBound = '1'
-    const src = (el.getAttribute('data-src') || '').trim()
-    if (!src) {
-      el.classList.remove('be-loading')
-      el.classList.add('be-error')
-      el.textContent =
-        'Ajoutez votre fichier .glb dans public/models/ et renseignez data-src sur ce bloc.'
-      return
-    }
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -144,5 +192,44 @@ function bindViewportObservers(scope) {
   })
 }
 
-const portfolioBe = document.getElementById('portfolio-be')
-if (portfolioBe) bindViewportObservers(portfolioBe)
+// ─── Bootstrap ───────────────────────────────────────────────────────────────
+
+async function init() {
+  const container = document.getElementById('portfolio-be')
+  if (!container) return
+
+  let manifest
+  try {
+    const res = await fetch('models-manifest.json')
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    manifest = await res.json()
+  } catch {
+    container.innerHTML =
+      '<p style="padding:4rem 4rem 2rem;color:var(--dim);font-size:.9rem;">Impossible de charger models-manifest.json — lancez npm\u00a0run\u00a0build ou npm\u00a0run\u00a0dev.</p>'
+    return
+  }
+
+  // Métadonnées optionnelles : titre, lieu, description par nom de fichier
+  let info = {}
+  try {
+    const res = await fetch('models-info.json')
+    if (res.ok) info = await res.json()
+  } catch {}
+
+  if (!manifest.files || !manifest.files.length) {
+    container.innerHTML =
+      '<p style="padding:4rem 4rem 2rem;color:var(--dim);font-size:.9rem;">Aucun fichier .glb trouvé dans public/models/.</p>'
+    return
+  }
+
+  container.innerHTML = ''
+  manifest.files.forEach((entry, i) => {
+    const extra = info[entry.file] || {}
+    container.appendChild(buildBlock({ ...entry, ...extra }, i))
+  })
+
+  setupItemObservers(container)
+  bindViewportObservers(container)
+}
+
+init()

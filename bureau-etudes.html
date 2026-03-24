@@ -100,40 +100,7 @@ footer{background:var(--bg);border-top:1px solid var(--ln);padding:2.8rem 4rem;d
     <p class="be-lead">Visualisations interactives des volumes réalisés sous SketchUp.</p>
   </div>
 
-  <div class="overlap-projects" id="portfolio-be" aria-label="Modèles 3D bureau d'études">
-    <div class="op-item" data-op>
-      <span class="op-num">01</span>
-      <div class="op-inner">
-        <div class="op-img">
-          <div class="op-img-inner">
-            <div class="be-viewport be-loading" data-src="models/blender_convert_leCarthageNice.glb?v=3" role="img" aria-label="Le Carthage Nice — modèle 3D"></div>
-          </div>
-        </div>
-        <div class="op-info">
-          <p class="op-cat">Nice</p>
-          <h2 class="op-title">Le Carthage Nice</h2>
-          <div class="op-rule"></div>
-          <p class="op-desc">Modélisation simple mais fidèle du bâtiment à des fins de ravalement de façades : surfaces par matériau pour le chiffrage et étude des coûts.<br><br><span class="op-desc-visu">Visionneuse 3D</span> :<br>Rotate : Clic gauche<br>Zoom : Molette<br>Déplacer : Clic droit</p>
-        </div>
-      </div>
-    </div>
-    <div class="op-item" data-op>
-      <span class="op-num">02</span>
-      <div class="op-inner">
-        <div class="op-img">
-          <div class="op-img-inner">
-            <div class="be-viewport be-loading" data-src="models/blender_convert_ARLEQUIN_CAGNES.glb?v=5" role="img" aria-label="Arlequin Cagnes — modèle 3D"></div>
-          </div>
-        </div>
-        <div class="op-info">
-          <p class="op-cat">Cagnes-sur-Mer</p>
-          <h2 class="op-title">Arlequin Cagnes-sur-Mer</h2>
-          <div class="op-rule"></div>
-          <p class="op-desc">Modélisation simple mais fidèle du bâtiment à des fins de ravalement de façades : surfaces par matériau pour le chiffrage et étude des coûts.<br><br><span class="op-desc-visu">Visionneuse 3D</span> :<br>Rotate : Clic gauche<br>Zoom : Molette<br>Déplacer : Clic droit</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="overlap-projects" id="portfolio-be" aria-label="Modèles 3D bureau d'études"></div>
 </main>
 
 <footer>
@@ -148,10 +115,6 @@ footer{background:var(--bg);border-top:1px solid var(--ln);padding:2.8rem 4rem;d
 
 <script>
 (function(){const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');if(!dot||!ring)return;let mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});(function lc(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(lc);})();document.querySelectorAll('a, button').forEach(el=>{el.addEventListener('mouseenter',()=>ring.classList.add('ch'));el.addEventListener('mouseleave',()=>ring.classList.remove('ch'));});})();
-function setupFrameBrightness(container){container.addEventListener('mouseenter',()=>container.classList.add('frame-hover'));container.addEventListener('mouseleave',()=>container.classList.remove('frame-hover'));}
-document.querySelectorAll('#portfolio-be .op-item').forEach(el=>setupFrameBrightness(el));
-var opObsBE=new IntersectionObserver(function(entries){entries.forEach(function(e){if(!e.isIntersecting)return;var item=e.target,ic=item.querySelector('.op-img'),inner=item.querySelector('.op-img-inner');if(ic)ic.classList.add('revealing');if(inner)setTimeout(function(){inner.classList.add('open');},80);item.classList.add('inview');opObsBE.unobserve(item);});},{threshold:.2});
-document.querySelectorAll('#portfolio-be [data-op]').forEach(function(el){opObsBE.observe(el);});
 </script>
 <script type="module" src="/js/bureau-etudes.js"></script>
 </body>

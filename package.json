@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Site Stéphane AUER - Architecture & Photoréalisme",
   "scripts": {
+    "models-manifest": "node scripts/generate-models-manifest.cjs",
+    "predev": "npm run models-manifest",
+    "prebuild": "npm run models-manifest",
     "dev": "vite --port 8080",
+    "build": "vite build",
     "preview": "vite preview --port 8080"
   },
   "devDependencies": {
