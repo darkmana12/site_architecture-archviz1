@@ -14,11 +14,28 @@ if (!fs.existsSync(modelsDir)) {
   fs.mkdirSync(modelsDir, { recursive: true })
 }
 
-const files = fs
-  .readdirSync(modelsDir)
-  .filter((f) => f.toLowerCase().endsWith('.glb'))
-  .sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
-  .map((f) => {
+/** Ordre d’affichage sur la page (le reste des .glb est trié alphabétiquement après). */
+const PREFERRED_ORDER = [
+  'blender_convert_leCarthageNice.glb',
+  'blender_convert_ARLEQUIN_CAGNES.glb',
+]
+
+function sortModelFiles(names) {
+  const set = new Set(names)
+  const ordered = []
+  for (const f of PREFERRED_ORDER) {
+    if (set.has(f)) {
+      ordered.push(f)
+      set.delete(f)
+    }
+  }
+  const rest = [...set].sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }))
+  return [...ordered, ...rest]
+}
+
+const files = sortModelFiles(
+  fs.readdirSync(modelsDir).filter((f) => f.toLowerCase().endsWith('.glb'))
+).map((f) => {
     const fpath = path.join(modelsDir, f)
     const v = String(Math.floor(fs.statSync(fpath).mtimeMs / 1000))
     return { file: f, v }
