@@ -1,5 +1,5 @@
 /**
- * Scan public/models/*.glb → public/models-manifest.json
+ * Scan public/models/*.glb → src/data/models-manifest.json (importé dans le bundle JS).
  * Exécuté automatiquement avant chaque "npm run dev" et "npm run build".
  * Le champ "v" = mtime du fichier en secondes → cache navigateur invalidé quand le fichier change.
  */
@@ -8,11 +8,12 @@ const path = require('path')
 
 const root = path.join(__dirname, '..')
 const modelsDir = path.join(root, 'public', 'models')
-const outFile = path.join(root, 'public', 'models-manifest.json')
+const outFile = path.join(root, 'src', 'data', 'models-manifest.json')
 
 if (!fs.existsSync(modelsDir)) {
   fs.mkdirSync(modelsDir, { recursive: true })
 }
+fs.mkdirSync(path.dirname(outFile), { recursive: true })
 
 /** Ordre d’affichage sur la page (le reste des .glb est trié alphabétiquement après). */
 const PREFERRED_ORDER = [
@@ -43,4 +44,4 @@ const files = sortModelFiles(
 
 const manifest = { files }
 fs.writeFileSync(outFile, JSON.stringify(manifest, null, 2) + '\n', 'utf8')
-console.log(`[models-manifest] ${files.length} fichier(s) → public/models-manifest.json`)
+console.log(`[models-manifest] ${files.length} fichier(s) → src/data/models-manifest.json`)

@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import manifest from '../src/data/models-manifest.json'
+import modelsInfo from '../src/data/models-info.json'
 
 // ─── Génération des blocs depuis le manifeste ────────────────────────────────
 
@@ -194,33 +196,22 @@ function bindViewportObservers(scope) {
 
 // ─── Bootstrap ───────────────────────────────────────────────────────────────
 
-/** Fichiers dans public/ (racine du site). BASE_URL = `./` en dev, `/repo/` en prod GitHub Pages. */
+/** URLs des .glb dans public/models/ (déployés à la racine du site). Résolu en URL absolue pour le loader Three.js. */
 function publicAssetUrl(path) {
   const p = path.replace(/^\//, '')
-  return `${import.meta.env.BASE_URL}${p}`
+  const s = `${import.meta.env.BASE_URL}${p}`
+  try {
+    return new URL(s, window.location.href).href
+  } catch {
+    return s
+  }
 }
 
-async function init() {
+function init() {
   const container = document.getElementById('portfolio-be')
   if (!container) return
 
-  let manifest
-  try {
-    const res = await fetch(publicAssetUrl('models-manifest.json'))
-    if (!res.ok) throw new Error(`HTTP ${res.status}`)
-    manifest = await res.json()
-  } catch {
-    container.innerHTML =
-      '<p style="padding:4rem 4rem 2rem;color:var(--dim);font-size:.9rem;">Impossible de charger models-manifest.json — lancez npm\u00a0run\u00a0build ou npm\u00a0run\u00a0dev.</p>'
-    return
-  }
-
-  // Métadonnées optionnelles : titre, lieu, description par nom de fichier
-  let info = {}
-  try {
-    const res = await fetch(publicAssetUrl('models-info.json'))
-    if (res.ok) info = await res.json()
-  } catch {}
+  const info = modelsInfo
 
   if (!manifest.files || !manifest.files.length) {
     container.innerHTML =
